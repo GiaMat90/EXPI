@@ -29,27 +29,26 @@ namespace Handlers
 			OUTPUT = 1,
 			NONE = std::numeric_limits<uint8_t>::max()
 		};
-		GPIO_Handler();
-		GPIO_Handler(const uint32_t port, const uint32_t pin);
-		~GPIO_Handler();
-		void setType(const GPIO_TYPE mode);
+		GPIO_Handler() : Handler(), m_type(GPIO_TYPE::NONE) {};
+		virtual ~GPIO_Handler(){};
+		// factory method
+		static GPIO_Handler* makeGPIO(const BOARD_TYPE board = BOARD_TYPE::UNDEFINED);
+		// overloaded methods
+		virtual void setType(const GPIO_TYPE mode) = 0;
+		virtual void setHigh() = 0;
+		virtual void setLow() = 0;
+		virtual void toggle() = 0;
+		virtual GPIO_STATUS getStatus() = 0;
+		virtual bool waitUntil(const GPIO_STATUS status, const uint32_t threshold = 100u) = 0;
+		virtual bool waitUntilFor(const GPIO_STATUS status, Handlers::Timer_Handler* timer, const uint32_t wait_time) = 0;
+		virtual uint32_t durationState(const GPIO_STATUS status, Handlers::Timer_Handler* timer) = 0;
+		// class methods
+		virtual void glitch();
 		void setStatus(const GPIO_STATUS status);
-		void setHigh();
-		void setLow();
-		void toggle();
-		void glitch();
-		GPIO_STATUS getStatus();
-		GPIO_TYPE getType();
-		bool waitUntil(const GPIO_STATUS status, const uint32_t threshold = 100u);
-		bool waitUntilFor(const GPIO_STATUS status, const Handlers::Timer_Handler* timer, const uint32_t wait_time);
-		uint32_t durationState(const GPIO_STATUS status, const Handlers::Timer_Handler* timer);
-	private:
-		void portSetType(const GPIO_TYPE mode);
-	private:
+		// inline methods
+		inline GPIO_TYPE getType() { return m_type; };
+	protected:
 		GPIO_TYPE m_type = GPIO_TYPE::NONE;
-		uint32_t m_port = 0u;
-		uint32_t m_pin = 0u;
-
 	};
 }
 
