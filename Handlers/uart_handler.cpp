@@ -10,46 +10,14 @@
 
 namespace Handlers
 {
-	UART_Handler::UART_Handler(UART_HandleTypeDef* huart, UART_MODE mode = UART_MODE::NONE) :
-			Handler(), m_huart(huart), m_mode(mode)
+	UART_Handler::UART_Handler(UART_MODE mode = UART_MODE::NONE) :
+			Handler(), m_mode(mode)
 	{
 	}
 
 	UART_Handler::~UART_Handler()
 	{
 
-	}
-
-	UART_Handler::UART_STATUS UART_Handler::receive(uint8_t* buffer)
-	{
-		HAL_StatusTypeDef rxStatus = HAL_UART_Receive_IT(m_huart, buffer, sizeof(buffer));
-		if(HAL_OK != rxStatus)
-		{
-			m_status = UART_STATUS::ERROR;
-		}
-		else
-		{
-			m_status = UART_STATUS::OK;
-		}
-
-		return m_status;
-	}
-
-	UART_Handler::UART_STATUS UART_Handler::send(uint8_t* buffer, size_t size)
-	{
-		if(size == 0u)
-		{
-			size = sizeof(buffer);
-		}
-		HAL_StatusTypeDef txStatus = HAL_UART_Transmit_IT(m_huart, buffer, size);
-		if(HAL_OK != txStatus)
-		{
-			m_status = UART_STATUS::ERROR;
-		}
-		else
-		{
-			m_status = UART_STATUS::OK;
-		}
 	}
 
 	UART_Handler::UART_STATUS UART_Handler::send(const std::string& msg)

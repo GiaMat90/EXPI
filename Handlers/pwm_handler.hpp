@@ -16,13 +16,10 @@ namespace Handlers
 	class PWM_Handler : public Handler
 	{
 	public:
-		PWM_Handler(TIM_HandleTypeDef *hTim, const uint32_t channel);
+		PWM_Handler();
 		~PWM_Handler();
-		void start() const;
-		void set_duty_cycle(const uint8_t dc);
-	private:
-		TIM_HandleTypeDef* m_hTim = nullptr;
-		uint32_t m_channel = 0u;
+		virtual void start() const = 0;
+		virtual void set_duty_cycle(const uint8_t dc) = 0;
 	};
 }
 

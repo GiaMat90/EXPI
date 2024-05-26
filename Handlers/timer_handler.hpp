@@ -9,7 +9,7 @@
 #define TIMER_HANDLER_HPP_
 
 #include "handlers.hpp"
-#include <main.h>
+#include <stdint.h>	// uint32_t
 
 namespace Handlers
 {
@@ -17,14 +17,11 @@ namespace Handlers
 	{
 	public:
 		Timer_Handler();
-		Timer_Handler(const TIM_HandleTypeDef *hTim);
 		Timer_Handler(const Timer_Handler& other);
 		~Timer_Handler();
-		void resetCounter();
-		void waitFor(const uint32_t time);
-		uint32_t getTimeCounter();
-	private:
-		TIM_HandleTypeDef* m_tim = nullptr;
+		virtual void resetCounter() = 0;
+		virtual void waitFor(const uint32_t time) = 0;
+		virtual uint32_t getTimeCounter() = 0;
 	};
 
 }

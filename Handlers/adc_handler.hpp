@@ -16,12 +16,10 @@ namespace Handlers
 	class ADC_Handler : public Handler
 	{
 	public:
-		ADC_Handler(ADC_HandleTypeDef* hadc = nullptr);
+		ADC_Handler();
 		~ADC_Handler();
-		void startPolling(const uint32_t delay);
-		uint32_t getValue() const;
-	private:
-		ADC_HandleTypeDef* m_hadc = nullptr;
+		virtual void startPolling(const uint32_t delay) = 0;
+		virtual uint32_t getValue() const = 0;
 	};
 }
 

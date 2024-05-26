@@ -9,21 +9,17 @@
 #define DAC_HANDLER_HPP_
 
 #include "handlers.hpp"
-#include <main.h>
 
 namespace Handlers
 {
 	class DAC_Handler : public Handler
 	{
 	public:
-		DAC_Handler(DAC_HandleTypeDef* hDac = nullptr, const uint32_t channel = 0u);
+		DAC_Handler();
 		~DAC_Handler();
-		void init();
-		void start();
-		void setValue(const uint32_t value);
-	private:
-		DAC_HandleTypeDef* m_dacHandle = nullptr;
-		uint32_t m_channel = 0u;
+		virtual void init() = 0;
+		virtual void start() = 0;
+		virtual void setValue(const uint32_t value) = 0;
 	};
 }
 
