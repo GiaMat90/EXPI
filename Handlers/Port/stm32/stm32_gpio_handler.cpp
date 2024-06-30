@@ -8,7 +8,9 @@ namespace Handlers
 	{
 
 		GPIO::GPIO() : GPIO_Handler(), m_port(0u), m_pin(0u)
-		{}
+		{
+			m_board = BOARD_TYPE::STM32;
+		}
 
 		GPIO::GPIO(const uint32_t port, const uint32_t pin) : GPIO_Handler(), m_port(port), m_pin(pin)
 		{
