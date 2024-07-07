@@ -54,30 +54,30 @@ namespace Handlers
 
 		void GPIO::setHigh()
 		{
-			HAL_GPIO_WritePin(m_port, m_pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin((GPIO_TypeDef *)m_port, m_pin, GPIO_PIN_SET);
 		}
 
 		void GPIO::setLow()
 		{
-			HAL_GPIO_WritePin(m_port, m_pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin((GPIO_TypeDef *)m_port, m_pin, GPIO_PIN_RESET);
 		}
 
 		void GPIO::toggle()
 		{
-			if(GPIO_PinState::GPIO_PIN_RESET == HAL_GPIO_ReadPin(m_port, m_pin))
+			if(GPIO_PinState::GPIO_PIN_RESET == HAL_GPIO_ReadPin((GPIO_TypeDef *)m_port, m_pin))
 			{
-				HAL_GPIO_WritePin(m_port, m_pin, GPIO_PIN_SET);
+				HAL_GPIO_WritePin((GPIO_TypeDef *)m_port, m_pin, GPIO_PIN_SET);
 			}
 			else
 			{
-				HAL_GPIO_WritePin(m_port, m_pin, GPIO_PIN_RESET);
+				HAL_GPIO_WritePin((GPIO_TypeDef *)m_port, m_pin, GPIO_PIN_RESET);
 			}
 		}
 
 		GPIO_Handler::GPIO_STATUS GPIO::getStatus()
 		{
 			GPIO_STATUS retVal = GPIO_STATUS::HIGH;
-			if(GPIO_PIN_RESET == HAL_GPIO_ReadPin(m_port, m_pin))
+			if(GPIO_PIN_RESET == HAL_GPIO_ReadPin((GPIO_TypeDef *)m_port, m_pin))
 			{
 				retVal = GPIO_STATUS::LOW;
 			}
